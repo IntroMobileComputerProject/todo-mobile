@@ -1,8 +1,8 @@
-import {View,Text} from 'react-native';
-export default function SignOut() {
+import AsyncStorage from "@react-native-async-storage/async-storage"
+
+export default function SignOut( {navigation}) {
     return (
-        <View>
-        <Text>Sign Out</Text>
-        </View>
+        AsyncStorage.removeItem('token'),
+        navigation.navigate('SignIn')
     );
 }

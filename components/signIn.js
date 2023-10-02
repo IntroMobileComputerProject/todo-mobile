@@ -3,16 +3,14 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'reac
 import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
 
-export default function SignIn() {
+export default function SignIn({ navigation}) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const navigator = useNavigation();
 
     const signIn = async () => {
         axios.post(
-            'https://7712-161-200-191-179.ngrok-free.app/Tokens',
+            'https://3ca6-161-200-191-20.ngrok-free.app/Tokens',
             {
               "userName": username,
               "userPassword": password,
@@ -24,10 +22,11 @@ export default function SignIn() {
         .then(async (response) => {
             await AsyncStorage.setItem('token', response.data.token);
             console.log(response.data.token);
-            navigator.navigate('Main');
+            Alert.alert("Success", "Login successful.");
+            navigation.navigate('AppDrawer');
         })
         .catch((error) => {
-            Alert.alert("Error", "Login failed. Please try again.");
+            Alert.alert("Error", "Login failed.")
             console.error(error);
         });
     }
